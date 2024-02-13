@@ -32,6 +32,7 @@ public class FPSCamera : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+
     // 순서 :
     // 1. 마우스 입력(drag) 을 받는다.
     // 2. 마우스 입력 값을 이용해 회전 방향을 구한다.
@@ -51,7 +52,7 @@ public class FPSCamera : MonoBehaviour
 
         // 2. 마우스 입력 값을 이용해 회전 방향을 구한다.
         Vector3 rotationDir = new Vector3(mouseX, mouseY, 0);        // x,y,z
-        rotationDir.Normalize();                                                            // 정규화
+        //rotationDir.Normalize();                                                            // 정규화
 
         // 3. 회전 방향으로 회전한다.
         // 새로운 위치 = 이전 위치 + 방향 * 속도 * 시간
@@ -65,6 +66,7 @@ public class FPSCamera : MonoBehaviour
 
         // 4. 시선의 상하 제한은 -90 ~ 90 사이로 제한하고 싶다.
         _my = Mathf.Clamp(_my, -90f, 90f);
+        //_mx = Mathf.Clamp(_mx, -270f, 270f);
 
         transform.eulerAngles = new Vector3(-_my, _mx, 0);
         // 오일러 각도의 단점
