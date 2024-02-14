@@ -350,6 +350,8 @@ MonoBehaviour:
   StaminaChargeSpeed: 50
   StaminaSliderUI: {fileID: 2032896418}
   JumpPower: 6
+  JumpMaxCount: 2
+  JumpRemainCount: 0
 --- !u!143 &67918161
 CharacterController:
   m_ObjectHideFlags: 0
@@ -374,7 +376,7 @@ CharacterController:
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &89945468
 GameObject:
@@ -1490,8 +1492,8 @@ Transform:
   m_GameObject: {fileID: 1033315280}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.57, y: 0, z: -0.97}
+  m_LocalScale: {x: 2.583, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1506152602}
@@ -1846,7 +1848,7 @@ Transform:
   m_GameObject: {fileID: 1649509825}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1, z: 5.02}
+  m_LocalPosition: {x: 0, y: 1, z: 9.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
