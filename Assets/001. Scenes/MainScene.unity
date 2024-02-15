@@ -311,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 67918154}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -2.141}
+  m_LocalPosition: {x: 1, y: 1, z: -2.141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -398,11 +398,11 @@ MonoBehaviour:
   ThrowPower: 15
   BombCountTextUI: {fileID: 1114843398}
   BombScore: 3
-  AutoMode: 1
   BombPool:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  BombPoolSize: 5
 --- !u!1 &89945468
 GameObject:
   m_ObjectHideFlags: 0
