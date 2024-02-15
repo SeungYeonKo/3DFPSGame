@@ -147,3 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BoomEffectPrefab: {fileID: 1780106543000636591, guid: 73598dca96e17474b953a019b00c880e, type: 3}
+  BombPrefab: {fileID: 8355768869098122892}
+  PoolSize: 10
+  BombPool: []
