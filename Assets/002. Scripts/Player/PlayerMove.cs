@@ -137,7 +137,7 @@ public class PlayerMove : MonoBehaviour
             //_isClimbing = true? ...  : 내가 했다 망한 방식
 
             // GPT 방식
-            Stamina -= _isClimbing ? StaminaConsumeSpeed * ClimbingStaminaConsumeFactor * Time.deltaTime : StaminaConsumeSpeed * Time.deltaTime;
+            //Stamina -= _isClimbing ? StaminaConsumeSpeed * ClimbingStaminaConsumeFactor * Time.deltaTime : StaminaConsumeSpeed * Time.deltaTime;
 
             // 강사님 방식
             float factor = _isClimbing ? ClimbingStaminaConsumeFactor : 1f;
