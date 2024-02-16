@@ -25,10 +25,6 @@ public class PlayerGunFire : MonoBehaviour
     public int CurrentBullet;
     public const int MaxBullet = 30;
 
-    // 반동효과
-    [Header("Recoil")]
-    public float RecoilAmount = 0.1f;
-
     private void Start()
     {
         CurrentBullet = MaxBullet;
