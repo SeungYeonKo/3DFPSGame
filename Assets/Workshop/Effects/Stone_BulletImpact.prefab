@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 19800000}
   - component: {fileID: 19900000}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stone_Flecks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4786,7 +4786,7 @@ GameObject:
   - component: {fileID: 400002}
   - component: {fileID: 19800002}
   - component: {fileID: 19900002}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stone_BulletImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4801,8 +4801,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100002}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.72663647, y: 0, z: 0, w: 0.68702215}
-  m_LocalPosition: {x: -13.186563, y: 0.0026745796, z: -6.260578}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 2.9810069, y: -5.497015e-17, z: 2.4756355}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9590,7 +9590,7 @@ GameObject:
   - component: {fileID: 400004}
   - component: {fileID: 19800004}
   - component: {fileID: 19900004}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stone_BulletImpact_
   m_TagString: Untagged
   m_Icon: {fileID: 0}

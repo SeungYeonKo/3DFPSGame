@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb90ba41e30b4d4e8bfe0ee2553abcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitEffect: {fileID: 0}
+  HitEffect: {fileID: 1133920253}
 --- !u!1 &89945468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,6 +1980,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114843395}
   m_CullTransparentMesh: 1
+--- !u!1001 &1133920252
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_Name
+      value: Stone_BulletImpact
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.186563
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.285
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.68702215
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.72663647
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900004, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+--- !u!198 &1133920253 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19800002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+  m_PrefabInstance: {fileID: 1133920252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1175960446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,3 +3040,4 @@ SceneRoots:
   - {fileID: 2080723294}
   - {fileID: 67918158}
   - {fileID: 1649509830}
+  - {fileID: 1133920252}
