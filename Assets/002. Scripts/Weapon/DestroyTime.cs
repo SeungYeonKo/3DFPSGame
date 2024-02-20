@@ -7,14 +7,12 @@ public class DestroyTime : MonoBehaviour
     public float DeleteTime = 1.5f;
     private float _timer = 0;
 
-    
-
     private void Update()
     {
         _timer += Time.deltaTime;
-        if(_timer >= DeleteTime)
+        if (_timer >= DeleteTime)
         {
-            Destroy(this.gameObject); 
+            Destroy(this.gameObject);
         }
     }
 }

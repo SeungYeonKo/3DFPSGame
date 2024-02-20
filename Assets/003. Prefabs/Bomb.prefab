@@ -146,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933cb5c66393e8742a85c6b9cccf119b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoomEffectPrefab: {fileID: 1780106543000636591, guid: 73598dca96e17474b953a019b00c880e, type: 3}
-  BombPrefab: {fileID: 8355768869098122892}
-  PoolSize: 10
-  BombPool: []
+  ExplosionRadius: 3
+  Damage: 60
+  BombEffectPrefab: {fileID: 1780106543000636591, guid: 73598dca96e17474b953a019b00c880e, type: 3}
