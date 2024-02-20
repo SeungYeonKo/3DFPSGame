@@ -26,6 +26,9 @@ public class Gun : MonoBehaviour
     // - 재장전 시간
     public  float ReloadTime = 1.5f;
 
+    // - 대표 이미지
+    public Sprite ProfileImage;
+
     private void Start()
     {
         // 총알 개수 초기화

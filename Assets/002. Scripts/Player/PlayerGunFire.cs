@@ -6,8 +6,22 @@ using UnityEngine.UI;
 
 public class PlayerGunFire : MonoBehaviour
 {
-    public Gun CurrentGun;  // 현재 들고있는 총
+    public Gun CurrentGun;        // 현재 들고있는 총
+    private int _currentGunIndex; // 현재 들고있는 총의 순서
+
     private float _timer;
+
+    private const int DefaultFOV = 60;
+    private const int ZoomFOV = 20;
+    private bool _isZoomMode = false;
+
+    public GameObject CrosshairUI;
+    public GameObject CrosshairZoomUI;
+
+
+    // 총을 담는 인벤토리
+    public List<Gun> GunInventory;
+
 
     // 목표: 마우스 왼쪽 버튼을 누르면 시선이 바라보는 방향으로 총을 발사하고 싶다.
     // 필요 속성
@@ -20,24 +34,26 @@ public class PlayerGunFire : MonoBehaviour
     private bool _isReloading = false;      // 재장전 중이냐?
     public GameObject ReloadTextObject;
 
-    public Gun rifleObject;
-    public Gun sniperObject;
-    public Gun pistolObject;
+    // 무기 이미지 UI
+    public Image GunImageUI;
 
     private void Start()
     {
+        _currentGunIndex = 0;
+
+        // 총알 개수 초기화
         RefreshUI();
-        // Set initial GunType to Rifle
-        CurrentGun = rifleObject;
-        // Set initial gun visibility
-        GunVisibility();
+        RefreshGun();
     }
 
     private void RefreshUI()
     {
+        GunImageUI.sprite = CurrentGun.ProfileImage;
         BulletTextUI.text = $"{CurrentGun.BulletRemainCount:d2}/{CurrentGun.BulletMaxCount}";
-    }
 
+        CrosshairUI.SetActive(!_isZoomMode);
+        CrosshairZoomUI.SetActive(_isZoomMode);
+    }
 
     private IEnumerator Reload_Coroutine()
     {
@@ -53,7 +69,68 @@ public class PlayerGunFire : MonoBehaviour
 
     private void Update()
     {
-        
+        // 마우스 휠 버튼 눌렀을 때ㅔ && 현재 총이 스나이퍼
+        if (Input.GetMouseButtonDown(2) && CurrentGun.GType == GunType.Sniper)
+        {
+            if (_isZoomMode)
+            {
+                _isZoomMode = false;
+                Camera.main.fieldOfView = DefaultFOV;
+            }
+            else
+            {
+                _isZoomMode = true;
+                Camera.main.fieldOfView = ZoomFOV;
+            }
+            RefreshUI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftBracket)) // '['
+        {
+            // 뒤로가기 
+            _currentGunIndex--;
+            if (_currentGunIndex < 0)
+            {
+                _currentGunIndex = GunInventory.Count - 1;
+            }
+            CurrentGun = GunInventory[_currentGunIndex];
+            RefreshGun();
+            RefreshUI();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightBracket)) // ']'
+        {
+            // 앞으로 가기
+            _currentGunIndex++;
+            if (_currentGunIndex >= GunInventory.Count)
+            {
+                _currentGunIndex = 0;
+            }
+            CurrentGun = GunInventory[_currentGunIndex];
+            RefreshGun();
+            RefreshUI();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _currentGunIndex = 0;
+            CurrentGun = GunInventory[0];
+            RefreshGun();
+            RefreshUI();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _currentGunIndex = 1;
+            CurrentGun = GunInventory[1];
+            RefreshGun();
+            RefreshUI();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _currentGunIndex = 2;
+            CurrentGun = GunInventory[2];
+            RefreshGun();
+            RefreshUI();
+        }
+
         if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount)
         {
             if (!_isReloading)
@@ -97,6 +174,7 @@ public class PlayerGunFire : MonoBehaviour
                     hitObject.Hit(CurrentGun.Damage);
                 }
 
+
                 // 5. 부딛힌 위치에 (총알이 튀는)이펙트를 위치한다.
                 HitEffect.gameObject.transform.position = hitInfo.point;
                 // 6. 이펙트가 쳐다보는 방향을 부딛힌 위치의 법선 벡터로 한다.
@@ -104,33 +182,22 @@ public class PlayerGunFire : MonoBehaviour
                 HitEffect.Play();
             }
         }
-        // GunType 변경 부분
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            CurrentGun = rifleObject;
-            Debug.Log("GunType.Rifle");
-            GunVisibility();
-            RefreshUI();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            CurrentGun = sniperObject;
-            Debug.Log("GunType.Sniper");
-            GunVisibility();
-            RefreshUI();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            CurrentGun = pistolObject;
-            Debug.Log("GunType.Pistol");
-            GunVisibility();
-            RefreshUI();
-        }
+
     }
-    private void GunVisibility()
+
+    private void RefreshGun()
     {
-        rifleObject.SetVisibility(CurrentGun == rifleObject);
-        sniperObject.SetVisibility(CurrentGun == sniperObject);
-        pistolObject.SetVisibility(CurrentGun == pistolObject);
+        foreach (Gun gun in GunInventory)
+        {
+            /**if (gun == CurrentGun)
+            {
+                gun.gameObject.SetActive(true);
+            }
+            else
+            {
+                gun.gameObject.SetActive(false);
+            }**/
+            gun.gameObject.SetActive(gun == CurrentGun);
+        }
     }
 }
