@@ -329,7 +329,7 @@ MonoBehaviour:
   JumpRemainCount: 0
   _yVelocity: 0
   ClimbingPower: 7
-  ClimbingStaminaCosumeFactor: 1.5
+  ClimbingStaminaCosumeFactor: 3
   Health: 0
   MaxHealth: 100
   HealthSliderUI: {fileID: 1261776735}
@@ -2317,9 +2317,9 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
     m_Alignment: 0
@@ -2753,7 +2753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20, y: 30}
+  m_AnchoredPosition: {x: 20, y: 35}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1416707916
@@ -2778,17 +2778,17 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_FontSize: 40
     m_FontStyle: 1
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 90
+    m_MaxSize: 70
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 2
+    m_LineSpacing: 0
   m_Text: 30 / 30
 --- !u!222 &1416707917
 CanvasRenderer:
@@ -3597,6 +3597,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1243308443094469034, guid: d9a64cd021578214c924a097178fe0c4, type: 3}
+      propertyPath: GType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243308443094469034, guid: d9a64cd021578214c924a097178fe0c4, type: 3}
       propertyPath: rifleObject
       value: 
       objectReference: {fileID: 153240747}
@@ -3808,6 +3812,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 67918158}
     m_Modifications:
+    - target: {fileID: 591831116983725888, guid: 45d4c60b6d4c6144f84e3b3d53aaede7, type: 3}
+      propertyPath: GType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 591831116983725888, guid: 45d4c60b6d4c6144f84e3b3d53aaede7, type: 3}
       propertyPath: rifleObject
       value: 

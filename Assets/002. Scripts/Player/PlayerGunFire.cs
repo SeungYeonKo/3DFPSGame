@@ -110,18 +110,21 @@ public class PlayerGunFire : MonoBehaviour
             CurrentGun = rifleObject;
             Debug.Log("GunType.Rifle");
             GunVisibility();
+            RefreshUI();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             CurrentGun = sniperObject;
             Debug.Log("GunType.Sniper");
             GunVisibility();
+            RefreshUI();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             CurrentGun = pistolObject;
             Debug.Log("GunType.Pistol");
             GunVisibility();
+            RefreshUI();
         }
     }
     private void GunVisibility()
