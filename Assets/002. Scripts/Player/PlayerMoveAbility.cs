@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerMove : MonoBehaviour, IHitable
+public class PlayerMoveAbility : MonoBehaviour, IHitable
 {
     // 목표: 키보드 방향키(wasd)를 누르면 캐릭터를 바라보는 방향 기준으로 이동시키고 싶다. 
     // 속성:
@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour, IHitable
     public float RunSpeed = 10;    // 뛰는 속도
 
     public float Stamina = 100;             // 스태미나
-    public const float MaxStamina = 100;    // 스태미나 최대량
+    public  float MaxStamina = 100;    // 스태미나 최대량
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
     public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
 
@@ -32,8 +32,6 @@ public class PlayerMove : MonoBehaviour, IHitable
     // 1. 만약에 [Spacebar] 버튼을 누르면..
     // 2. 플레이어에게 y축에 있어 점프 파워를 적용한다
 
-
-
     // 목표: 캐릭터에 중력을 적용하고 싶다.
     // 필요 속성:
     // - 중력 값
@@ -43,8 +41,6 @@ public class PlayerMove : MonoBehaviour, IHitable
     // 구현 순서:
     // 1. 중력 가속도가 누적된다.
     // 2. 플레이어에게 y축에 있어 중력을 적용한다.
-
-
 
     // 목표: 벽에 닿아 있는 상태에서 스페이스바를 누르면 벽타기를 하고 싶다.
     // 필요 속성:
@@ -59,15 +55,10 @@ public class PlayerMove : MonoBehaviour, IHitable
     // 2. [Spacebar] 버튼을 누르고 있으면
     // 3. 벽을 타겠다.
 
-
     [Header("체력 슬라이더 UI")]
-
     public int Health;
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
-
-
-
 
     private void Awake()
     {

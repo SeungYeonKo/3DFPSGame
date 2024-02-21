@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerGunFire : MonoBehaviour
+public class PlayerGunFireAbility : MonoBehaviour
 {
     public Gun CurrentGun;        // 현재 들고있는 총
     private int _currentGunIndex; // 현재 들고있는 총의 순서
@@ -52,7 +52,7 @@ public class PlayerGunFire : MonoBehaviour
         RefreshGun();
     }
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
         GunImageUI.sprite = CurrentGun.ProfileImage;
         BulletTextUI.text = $"{CurrentGun.BulletRemainCount:d2}/{CurrentGun.BulletMaxCount:d2}";
@@ -146,6 +146,7 @@ public class PlayerGunFire : MonoBehaviour
             _currentGunIndex = 0;
             CurrentGun = GunInventory[0];
             _isZoomMode = false;
+            _zoomProgress = 1f;
             RefreshZoomMode();
             RefreshGun();
             RefreshUI();
@@ -155,6 +156,7 @@ public class PlayerGunFire : MonoBehaviour
             _currentGunIndex = 1;
             CurrentGun = GunInventory[1];
             _isZoomMode = false;
+            _zoomProgress = 1f;
             RefreshZoomMode();
             RefreshGun();
             RefreshUI();
@@ -164,6 +166,7 @@ public class PlayerGunFire : MonoBehaviour
             _currentGunIndex = 2;
             CurrentGun = GunInventory[2];
             _isZoomMode = false;
+            _zoomProgress = 1f;
             RefreshZoomMode();
             RefreshGun();
             RefreshUI();
