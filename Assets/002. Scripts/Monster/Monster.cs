@@ -9,7 +9,7 @@ public enum MonsterState            // Monster의 상태
     Idle,                   // 유휴
     Trace,                // 대기
     Attack,              //공격
-    Comeback,              // 복귀
+    Comeback,        // 복귀
     Damaged,         // 공격 당함
     Die                    //사망
 }
@@ -29,7 +29,10 @@ public class Monster : MonoBehaviour, IHitable
     public float MoveSpeed = 2.5f;         // 이동 속도
     public Vector3 StartPosition;            // Monster 시작 위치
     public float MoveDistance = 40f;     // 움직일 수 있는 거리
-    public const float Tolerance = 0.1f;
+    public const float Tolerance = 0.1f;  // 허용 오차 범위
+    public int Damage = 10;
+    public const float AttackDelay = 1f;
+    private float _attackTimer = 0f;
 
     public float rotationSpeed = 5f;
 
@@ -70,6 +73,10 @@ public class Monster : MonoBehaviour, IHitable
             case MonsterState.Comeback:
                 Comeback();
                 break;
+
+            case MonsterState.Attack:
+                Attack();
+                break;
         }
     }
 
@@ -96,11 +103,11 @@ public class Monster : MonoBehaviour, IHitable
         // 3. 쳐다본다
         transform.LookAt(_target);
 
-        /*if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
-   {
-       Debug.Log("상태 전환 : Trace -> Attack");
-       _CurrentState = MonsterState.Attack;
-   }*/
+        if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
+       {
+           Debug.Log("상태 전환 : Trace -> Attack");
+           _CurrentState = MonsterState.Attack;
+       }
 
         if (Vector3.Distance(transform.position, StartPosition) >= MoveDistance)
         {
@@ -139,6 +146,29 @@ public class Monster : MonoBehaviour, IHitable
 
         // 회전 적용
         transform.eulerAngles = new Vector3(0, targetAngle, 0);
+    }
+
+    private void Attack()
+    {
+        // 전이 사건 : 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
+        if(Vector3.Distance(_target.position, transform.position)>AttackDistance)
+        {
+            _attackTimer = 0;
+            Debug.Log("상태 전환 : Attack -> Trace");
+            _CurrentState = MonsterState.Trace;
+            return;
+        }
+        _attackTimer += Time.deltaTime;
+        if (_attackTimer >= AttackDelay) 
+        {
+            IHitable playerHitable = _target.GetComponent<IHitable>();
+            if (playerHitable != null)
+            {
+                Debug.Log("맞았다!");
+                playerHitable.Hit(Damage);
+                _attackTimer = 0;
+            }
+        }
     }
 
     public void Hit(int damage)
