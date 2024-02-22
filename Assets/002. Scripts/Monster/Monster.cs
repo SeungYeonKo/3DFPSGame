@@ -23,18 +23,22 @@ public class Monster : MonoBehaviour, IHitable
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
 
-    public Transform _target;                   // 플레이어
-    public float FindDistance = 5f;          // 감지 거리
-    public float AttackDistance = 2f;       // 공격 범위 
-    public float MoveSpeed = 2.5f;         // 이동 속도
-    public Vector3 StartPosition;            // Monster 시작 위치
-    public float MoveDistance = 40f;     // 움직일 수 있는 거리
-    public const float Tolerance = 0.1f;  // 허용 오차 범위
-    public int Damage = 10;
-    public const float AttackDelay = 1f;
+    public Transform _target;                           // 플레이어
+    public float FindDistance = 5f;                  // 감지 거리
+    public float AttackDistance = 2f;              // 공격 범위 
+    public float MoveSpeed = 2.5f;                // 이동 속도
+    public Vector3 StartPosition;                    // Monster 시작 위치
+    public float MoveDistance = 40f;            // 움직일 수 있는 거리
+    public const float Tolerance = 0.1f;         // 허용 오차 범위
+    public int Damage = 10;                          // Monster공격력
+    public const float AttackDelay = 1f; 
     private float _attackTimer = 0f;
 
-    public float rotationSpeed = 5f;
+    private Vector3 _KnockbackStartPosition;
+    private Vector3 _KnockbackEndPosition;
+    private const float KNOCKBACK_DURATION = 0.5f;
+    private float _knockbackProgress = 0f;
+    public float KnockbackPower = 0.5f;
 
     private MonsterState _CurrentState = MonsterState.Idle;
 
@@ -76,6 +80,10 @@ public class Monster : MonoBehaviour, IHitable
 
             case MonsterState.Attack:
                 Attack();
+                break;
+
+            case MonsterState.Damaged:
+                Damaged();
                 break;
         }
     }
@@ -171,12 +179,44 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
 
+    private void Damaged()
+    {
+        // 1. Damaged 애니메이션 실행(0.5초)
+        // 2. 넉백 구현
+        // 2-1. 넉백 시작/최종 위치를 구한다
+        if(_knockbackProgress == 0)
+        {
+            _KnockbackStartPosition = transform.position;
+            Vector3 dir = transform.position - _target.position;
+            dir.y = 0;
+            dir.Normalize();
+            _KnockbackEndPosition = transform.position + dir * KnockbackPower;
+        }
+        _knockbackProgress += Time.deltaTime / KNOCKBACK_DURATION;
+
+        // 2-2. Lerp를 이용해 넉백하기
+        transform.position = Vector3.Lerp(_KnockbackStartPosition, _KnockbackEndPosition, _knockbackProgress);
+
+        if(_knockbackProgress > 1)
+        {
+            _knockbackProgress = 0;
+            // 3. Trace로 상태 전환
+            Debug.Log("상태 전환 : Damaged -> Trace");
+            _CurrentState = MonsterState.Trace;
+        }
+    }
+
     public void Hit(int damage)
     {
         Health -= damage;
         if (Health <= 0)
         {
             Die();
+        }
+        else
+        {
+            Debug.Log("상태 전환 : Any -> Damaged");
+            _CurrentState = MonsterState.Damaged;
         }
     }
 

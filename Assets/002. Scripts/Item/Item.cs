@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum ItemType
 {
@@ -12,17 +14,26 @@ public enum ItemType
     Bullet            // 총알 충전
 }
 
+
 public class Item 
 {
     public ItemType ItemType;
     public int Count;
+    
 
     public Item(ItemType itemType, int count)
     {
         ItemType = itemType;
         Count = count;
-    }   
+    }
 
+    private void Start()
+    {
+     
+    }
+
+   
+   
     public bool TryUse()
     {
         if(Count == 0)
