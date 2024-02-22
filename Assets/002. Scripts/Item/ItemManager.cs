@@ -13,8 +13,6 @@ public class ItemManager : MonoBehaviour
     public Text StaminaItemCountTextUI;
     public Text BulletItemCountTextUI;
 
-    public List<Item> ItemList = new List<Item>(); // 아이템 리스트
-
     private void Awake()
     {
         if (Instance == null)
@@ -27,11 +25,13 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    public List<Item> ItemList = new List<Item>(); // 아이템 리스트
+
     private void Start()
     {
-        ItemList.Add(new Item(ItemType.Health, 3));  // 0: Health
-        ItemList.Add(new Item(ItemType.Stamina, 5)); // 1: Stamina
-        ItemList.Add(new Item(ItemType.Bullet, 7));  // 2: Bullet
+        ItemList.Add(new Item(ItemType.Health, 0));  // 0: Health
+        ItemList.Add(new Item(ItemType.Stamina, 0)); // 1: Stamina
+        ItemList.Add(new Item(ItemType.Bullet, 0));  // 2: Bullet
 
         RefreshUI();
     }
@@ -44,6 +44,7 @@ public class ItemManager : MonoBehaviour
             if (ItemList[i].ItemType == itemType)
             {
                 ItemList[i].Count++;
+                RefreshUI();
                 break;
             }
         }
@@ -69,7 +70,9 @@ public class ItemManager : MonoBehaviour
         {
             if (ItemList[i].ItemType == itemType)
             {
-                return ItemList[i].TryUse();
+                bool result = ItemList[i].TryUse();
+                RefreshUI();
+                return result;
             }
         }
         return false;
