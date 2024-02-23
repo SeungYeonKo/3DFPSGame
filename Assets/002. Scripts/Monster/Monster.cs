@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 
 public enum MonsterState            // Monster의 상태
@@ -42,9 +43,14 @@ public class Monster : MonoBehaviour, IHitable
 
     private MonsterState _CurrentState = MonsterState.Idle;
 
+    private NavMeshAgent _navMeshAgent;
+
     private void Start()
     {
-        _characterController = GetComponent<CharacterController>();
+        /*_characterController = GetComponent<CharacterController>();*/
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.speed = MoveSpeed;
+
         _target = GameObject.FindGameObjectWithTag("Player").transform;
         StartPosition = transform.position;
 
@@ -106,8 +112,9 @@ public class Monster : MonoBehaviour, IHitable
         Vector3 dir = _target.transform.position - this.transform.position;
         dir.y = 0;
         dir.Normalize();
-        // 2. 이동한다
-        _characterController.Move( dir * MoveSpeed * Time.deltaTime);
+        // 2. 내비게이션이 접근하는 최소거리를 공진짜어이가없다진짜ㅣ진짲격하는 거리로 설정
+        _navMeshAgent.stoppingDistance = AttackDistance;
+        _navMeshAgent.destination = _target.position;
         // 3. 쳐다본다
         transform.LookAt(_target);
 
@@ -131,10 +138,17 @@ public class Monster : MonoBehaviour, IHitable
         dir.y = 0;
         dir.Normalize();
         // 2. 이동한다
-        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        _navMeshAgent.stoppingDistance = Tolerance;
+        _navMeshAgent.destination = StartPosition;
         RotateCharacter(StartPosition);
 
-        if (Vector3.Distance(this.gameObject.transform.position,  StartPosition) < Tolerance)
+        if(!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance<= Tolerance)
+        {
+            Debug.Log("상태 전환 : Comeback -> Idle");
+            _CurrentState = MonsterState.Idle;
+        }
+
+        if (Vector3.Distance(this.gameObject.transform.position,  StartPosition) >= Tolerance)
         {
             _CurrentState = MonsterState.Idle;
             Debug.Log("상태 전환 : Comeback -> Idle");
