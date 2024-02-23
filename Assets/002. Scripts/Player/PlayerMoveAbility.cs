@@ -146,9 +146,13 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
         Stamina = Mathf.Clamp(Stamina, 0, 100);
         StaminaSliderUI.value = Stamina / MaxStamina;  // 0 ~ 1;//
 
-        // 땅에 닿아을때 
+        // 땅에 닿았을때 
         if (_characterController.isGrounded)
         {
+            if(_yVelocity < -30)
+            {
+                Hit(10 * (int)(_yVelocity / 10f));
+            }
             _isJumping = false;
             _isClimbing = false;
             _yVelocity = 0f;
