@@ -21,6 +21,7 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
 
     private CharacterController _characterController;
 
+
     // 목표: 스페이스바를 누르면 캐릭터를 점프하고 싶다.
     // 필요 속성:
     // - 점프 파워 값
@@ -61,6 +62,7 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     public Slider HealthSliderUI;
 
     public Image HitEffectImageUI;
+    private const float HitEffectTime = 0.2f;
 
     private void Awake()
     {
@@ -186,7 +188,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
 
     public void Hit(int damage)
     {
-        StartCoroutine(HitEffect_Coroutine(0.3f));
+        StartCoroutine(HitEffect_Coroutine(HitEffectTime));
+        CameraManager.Instance.CameraShake.Shake();
 
         Health -= damage;
         if (Health <= 0)
