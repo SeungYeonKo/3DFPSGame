@@ -25,11 +25,11 @@ public class Monster : MonoBehaviour, IHitable
     public Slider HealthSliderUI;
 
     public Transform _target;                           // 플레이어
-    public float FindDistance = 5f;                  // 감지 거리
+    public float FindDistance = 10f;                  // 감지 거리
     public float AttackDistance = 2f;              // 공격 범위 
     public float MoveSpeed = 2.5f;                // 이동 속도
     public Vector3 StartPosition;                    // Monster 시작 위치
-    public float MoveDistance = 40f;            // 움직일 수 있는 거리
+    public float MoveDistance = 50f;            // 움직일 수 있는 거리
     public const float Tolerance = 0.1f;         // 허용 오차 범위
     public int Damage = 10;                          // Monster공격력
     public const float AttackDelay = 1f; 

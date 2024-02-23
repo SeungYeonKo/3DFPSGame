@@ -15,7 +15,7 @@ public class ItemObject : MonoBehaviour
 
     private ItemState _CurrentState = ItemState.Idle;
     public Transform _player;
-    public float FindDistance = 7f;           // 감지 거리  
+    public float FindDistance = 10f;           // 감지 거리  
 
     private Vector3 _startPosition;
     private const float FLYING_DURATION = 0.3f;
@@ -44,6 +44,7 @@ public class ItemObject : MonoBehaviour
     }
     private void Idle()
     {
+        transform.Rotate(0, 200 * Time.deltaTime, 0);
         // 대기 상태의 행동 : 플레이어와의 거리를 체크한다
         float distance = Vector3.Distance(_player.position, transform.position);
         // 전이 조건 : 플레이어와 거리가 충분히 가까워지면
@@ -67,6 +68,7 @@ public class ItemObject : MonoBehaviour
     {
         _flyingCoroutine = null;
         _progress = 0;
+        _CurrentState = ItemState.Idle;
     }
 
     private IEnumerator Flying_Coroutine()
