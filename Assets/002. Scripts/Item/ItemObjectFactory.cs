@@ -82,6 +82,7 @@ public class ItemObjectFactory : MonoBehaviour
         if (gameObject != null)
         {
            itemObject.transform.position = position;
+            itemObject.Init();
             itemObject.gameObject.SetActive(true);
         }
     }

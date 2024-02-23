@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -53,7 +54,42 @@ public class ItemObject : MonoBehaviour
         }
     }
 
+    private Coroutine _flyingCoroutine;
+
     private void Flying()
+    {
+        if (_flyingCoroutine == null)
+        {
+            _flyingCoroutine = StartCoroutine(Flying_Coroutine());
+        }
+    }
+    public void Init()
+    {
+        _flyingCoroutine = null;
+        _progress = 0;
+    }
+
+    private IEnumerator Flying_Coroutine()
+    {
+        while (_progress < 0.7f)
+        {
+            _progress += Time.deltaTime / FLYING_DURATION;
+            transform.position = Vector3.Slerp(_startPosition, _player.position, _progress);
+            yield return null;
+        }
+
+        // 1. 아이템 매니저(인벤토리)에 추가하고
+        ItemManager.Instance.AddItem(ItemType);
+        ItemManager.Instance.RefreshUI();
+        // 2. 사라진다
+        gameObject.SetActive(false);
+    }
+}
+
+// 실습 과제 31. 몬스터가 죽으면 아이템이 드랍(Health: 30%, Stamina: 20%, Bullet: 10%)
+// 실습 과제 32.  일정 거리가 되면 아이템이 베지어 곡선으로 날라오게 하기 (중간점 랜덤)
+/* 
+ *  private void Flying()
     {
         _progress += Time.deltaTime / FLYING_DURATION;
         transform.position = Vector3.Slerp(_startPosition, _player.position, _progress);
@@ -67,8 +103,5 @@ public class ItemObject : MonoBehaviour
         }
         Debug.Log("슝~ 날아가는중~");
     }
-}
-    // 실습 과제 31. 몬스터가 죽으면 아이템이 드랍(Health: 30%, Stamina: 20%, Bullet: 10%)
-    // 실습 과제 32.  일정 거리가 되면 아이템이 베지어 곡선으로 날라오게 하기 (중간점 랜덤)
-
+*/
 
