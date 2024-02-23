@@ -5,12 +5,13 @@ using UnityEngine;
 public class TPSCamera : MonoBehaviour
 {
     public Transform Target;
-    public Vector3 Offset = new Vector3(0, 2f, -3f);
+    public Vector3 Offset = new Vector3(0, 3f, -3f);
+
 
     public float a;
     private void LateUpdate()
     {
-        transform.position = Target.position + Offset;
+        transform.localPosition = Target.position + Offset;
         transform.LookAt(Target);
 
         Vector2 xy = CameraManager.Instance.XY;
@@ -18,6 +19,6 @@ public class TPSCamera : MonoBehaviour
         transform.RotateAround(Target.position, transform.right, -xy.y);
 
 
-        transform.position = Target.position - transform.forward * Offset.magnitude + Vector3.up * (Offset.y - a);
+        transform.localPosition = Target.position - transform.forward * Offset.magnitude + Vector3.up * (Offset.y - a);
     }
 }

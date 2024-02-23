@@ -12,7 +12,7 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     public float RunSpeed = 10;    // 뛰는 속도
 
     public float Stamina = 100;             // 스태미나
-    public  float MaxStamina = 100;    // 스태미나 최대량
+    public const float MaxStamina = 100;    // 스태미나 최대량
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
     public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
 
@@ -20,7 +20,6 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     public Slider StaminaSliderUI;
 
     private CharacterController _characterController;
-
 
     // 목표: 스페이스바를 누르면 캐릭터를 점프하고 싶다.
     // 필요 속성:
@@ -33,6 +32,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     // 1. 만약에 [Spacebar] 버튼을 누르면..
     // 2. 플레이어에게 y축에 있어 점프 파워를 적용한다
 
+
+
     // 목표: 캐릭터에 중력을 적용하고 싶다.
     // 필요 속성:
     // - 중력 값
@@ -42,6 +43,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     // 구현 순서:
     // 1. 중력 가속도가 누적된다.
     // 2. 플레이어에게 y축에 있어 중력을 적용한다.
+
+
 
     // 목표: 벽에 닿아 있는 상태에서 스페이스바를 누르면 벽타기를 하고 싶다.
     // 필요 속성:
@@ -56,13 +59,13 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     // 2. [Spacebar] 버튼을 누르고 있으면
     // 3. 벽을 타겠다.
 
-    [Header("체력 슬라이더 UI")]
     public int Health;
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
 
+
     public Image HitEffectImageUI;
-    private const float HitEffectTime = 0.2f;
+
 
     private void Awake()
     {
@@ -93,8 +96,11 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
                 // 3. 벽을 타겠다.
                 _isClimbing = true;
                 _yVelocity = ClimbingPower;
+
             }
         }
+
+
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
@@ -147,13 +153,14 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
         Stamina = Mathf.Clamp(Stamina, 0, 100);
         StaminaSliderUI.value = Stamina / MaxStamina;  // 0 ~ 1;//
 
-        // 땅에 닿았을때 
+        // 땅에 닿아을때 
         if (_characterController.isGrounded)
         {
-            if(_yVelocity < -30)
+            if (_yVelocity < -20)
             {
-                Hit(10 * (int)(_yVelocity / 10f));
+                Hit(10 * (int)(_yVelocity / -10f));
             }
+
             _isJumping = false;
             _isClimbing = false;
             _yVelocity = 0f;
@@ -188,25 +195,22 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
 
     public void Hit(int damage)
     {
-        StartCoroutine(HitEffect_Coroutine(HitEffectTime));
+        StartCoroutine(HitEffect_Coroutine(0.2f));
         CameraManager.Instance.CameraShake.Shake();
 
         Health -= damage;
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            HealthSliderUI.value = 0f;
+            gameObject.SetActive(false);
         }
     }
 
     private IEnumerator HitEffect_Coroutine(float delay)
     {
-        // 과제 40. HitEffectImage 0.3초동안 보이게 구현
+        // 과제 40. 히트 이펙트 이미지 0.3초동안 보이게 구현
         HitEffectImageUI.gameObject.SetActive(true);
-
-        // 0.3초 동안 대기
         yield return new WaitForSeconds(delay);
-
-        // HitEffectImage를 비활성화하여 숨김
         HitEffectImageUI.gameObject.SetActive(false);
     }
 }
