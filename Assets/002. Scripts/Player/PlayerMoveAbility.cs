@@ -60,6 +60,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
 
+    public Image HitEffectImageUI;
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -89,11 +91,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
                 // 3. 벽을 타겠다.
                 _isClimbing = true;
                 _yVelocity = ClimbingPower;
-
             }
         }
-
-
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
@@ -187,10 +186,24 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
 
     public void Hit(int damage)
     {
+        StartCoroutine(HitEffect_Coroutine(0.3f));
+
         Health -= damage;
         if (Health <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator HitEffect_Coroutine(float delay)
+    {
+        // 과제 40. HitEffectImage 0.3초동안 보이게 구현
+        HitEffectImageUI.gameObject.SetActive(true);
+
+        // 0.3초 동안 대기
+        yield return new WaitForSeconds(delay);
+
+        // HitEffectImage를 비활성화하여 숨김
+        HitEffectImageUI.gameObject.SetActive(false);
     }
 }
