@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public class PlayerGunFireAbility : MonoBehaviour
 
     // 재장전
     private bool _isReloading = false;      
-    public GameObject ReloadTextObject;
+    public TextMeshProUGUI ReloadTextObject;
 
     // 무기 이미지 UI
     public Image GunImageUI;
@@ -145,7 +146,7 @@ public class PlayerGunFireAbility : MonoBehaviour
         {
             _currentGunIndex = 0;
             CurrentGun = GunInventory[0];
-            _isZoomMode = false;
+            _isZoomMode = false;                                   
             _zoomProgress = 1f;
             RefreshZoomMode();
             RefreshGun();
@@ -180,7 +181,7 @@ public class PlayerGunFireAbility : MonoBehaviour
             }
         }
 
-        ReloadTextObject.SetActive(_isReloading);
+        ReloadTextObject.gameObject.SetActive(_isReloading);
 
         _timer += Time.deltaTime;
 
