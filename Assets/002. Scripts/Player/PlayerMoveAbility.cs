@@ -85,112 +85,112 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
 
     void Update()
     {
-        HealthSliderUI.value = (float)Health / (float)MaxHealth;  // 0 ~ 1
-
-        // 1. 만약 벽에 닿아 있는데 && 스태미너가 > 0
-        if (Stamina > 0 && _characterController.collisionFlags == CollisionFlags.Sides)
+        if (GameManager.Instance.state == GameState.Start)
         {
-            // 2. [Spacebar] 버튼을 누르고 있으면
-            if (Input.GetKey(KeyCode.Space))
-            {
-                // 3. 벽을 타겠다.
-                _isClimbing = true;
-                _yVelocity = ClimbingPower;
+            HealthSliderUI.value = (float)Health / (float)MaxHealth;  // 0 ~ 1
 
+            // 1. 만약 벽에 닿아 있는데 && 스태미너가 > 0
+            if (Stamina > 0 && _characterController.collisionFlags == CollisionFlags.Sides)
+            {
+                // 2. [Spacebar] 버튼을 누르고 있으면
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    // 3. 벽을 타겠다.
+                    _isClimbing = true;
+                    _yVelocity = ClimbingPower;
+
+                }
             }
-        }
-
-
-
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            // FPS 카메라 모드로 전환
-            CameraManager.Instance.SetCameraMode(CameraMode.FPS);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            // TPS 카메라 모드로 전환
-            CameraManager.Instance.SetCameraMode(CameraMode.TPS);
-        }
-
-
-        // 1. 키 입력 받기
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-        // 2. '캐릭터가 바라보는 방향'을 기준으로 방향구하기
-        Vector3 dir = new Vector3(h, 0, v);             // 로컬 좌표꼐 (나만의 동서남북) 
-        dir.Normalize();
-        // Transforms direction from local space to world space.
-        dir = Camera.main.transform.TransformDirection(dir); // 글로벌 좌표계 (세상의 동서남북)
-
-        // 실습 과제 1. Shift 누르고 있으면 빨리 뛰기
-        float speed = MoveSpeed; // 5
-        if (_isClimbing || Input.GetKey(KeyCode.LeftShift)) // 실습 과제 2. 스태미너 구현
-        {
-            // - Shfit 누른 동안에는 스태미나가 서서히 소모된다. (3초)
-
-            // 조건(삼항) 연산자
-            // -> 조건식을 사용해서 조건식의 참, 거짓 여부에 따라 다른 결과값을 대입
-            // 조건식 ? 조건식이 참일때의 값 : 조건식이 거짓일때의 값
-
-            float factor = _isClimbing ? ClimbingStaminaCosumeFactor : 1f;
-            Stamina -= StaminaConsumeSpeed * factor * Time.deltaTime;
-
-
-            // 클라이밍 상태가 아닐때만 스피드 up!
-            if (!_isClimbing && Stamina > 0)
+            if (Input.GetKeyDown(KeyCode.Alpha9))
             {
-                speed = RunSpeed;
+                // FPS 카메라 모드로 전환
+                CameraManager.Instance.SetCameraMode(CameraMode.FPS);
             }
-        }
-        else
-        {
-            // - 아니면 스태미나가 소모 되는 속도보다 빠른 속도로 충전된다 (2초)
-            Stamina += StaminaChargeSpeed * Time.deltaTime; // 초당 50씩 충전
-        }
-
-        Stamina = Mathf.Clamp(Stamina, 0, 100);
-        StaminaSliderUI.value = Stamina / MaxStamina;  // 0 ~ 1;//
-
-        // 땅에 닿아을때 
-        if (_characterController.isGrounded)
-        {
-            if (_yVelocity < -20)
+            else if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                Hit(10 * (int)(_yVelocity / -10f));
+                // TPS 카메라 모드로 전환
+                CameraManager.Instance.SetCameraMode(CameraMode.TPS);
             }
 
-            _isJumping = false;
-            _isClimbing = false;
-            _yVelocity = 0f;
-            JumpRemainCount = JumpMaxCount;
+
+            // 1. 키 입력 받기
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
+
+            // 2. '캐릭터가 바라보는 방향'을 기준으로 방향구하기
+            Vector3 dir = new Vector3(h, 0, v);             // 로컬 좌표꼐 (나만의 동서남북) 
+            dir.Normalize();
+            // Transforms direction from local space to world space.
+            dir = Camera.main.transform.TransformDirection(dir); // 글로벌 좌표계 (세상의 동서남북)
+            
+            // 실습 과제 1. Shift 누르고 있으면 빨리 뛰기
+            float speed = MoveSpeed; // 5
+            if (_isClimbing || Input.GetKey(KeyCode.LeftShift)) // 실습 과제 2. 스태미너 구현
+            {
+                // - Shfit 누른 동안에는 스태미나가 서서히 소모된다. (3초)
+
+                // 조건(삼항) 연산자
+                // -> 조건식을 사용해서 조건식의 참, 거짓 여부에 따라 다른 결과값을 대입
+                // 조건식 ? 조건식이 참일때의 값 : 조건식이 거짓일때의 값
+
+                float factor = _isClimbing ? ClimbingStaminaCosumeFactor : 1f;
+                Stamina -= StaminaConsumeSpeed * factor * Time.deltaTime;
+
+
+                // 클라이밍 상태가 아닐때만 스피드 up!
+                if (!_isClimbing && Stamina > 0)
+                {
+                    speed = RunSpeed;
+                }
+            }
+            else
+            {
+                // - 아니면 스태미나가 소모 되는 속도보다 빠른 속도로 충전된다 (2초)
+                Stamina += StaminaChargeSpeed * Time.deltaTime; // 초당 50씩 충전
+            }
+
+            Stamina = Mathf.Clamp(Stamina, 0, 100);
+            StaminaSliderUI.value = Stamina / MaxStamina;  // 0 ~ 1;//
+
+            // 땅에 닿아을때 
+            if (_characterController.isGrounded)
+            {
+                if (_yVelocity < -20)
+                {
+                    Hit(10 * (int)(_yVelocity / -10f));
+                }
+
+                _isJumping = false;
+                _isClimbing = false;
+                _yVelocity = 0f;
+                JumpRemainCount = JumpMaxCount;
+            }
+
+            // 점프 구현
+            // 1. 만약에 [Spacebar] 버튼을 누르는 순간 && (땅이거나 or 점프 횟수가 남아있다면)
+            if (Input.GetKeyDown(KeyCode.Space) && (_characterController.isGrounded || (_isJumping && JumpRemainCount > 0)))
+            {
+                _isJumping = true;
+
+                JumpRemainCount--;
+
+                // 2. 플레이어에게 y축에 있어 점프 파워를 적용한다.
+                _yVelocity = JumpPower;
+            }
+
+
+            // 3-1. 중력 적용
+            // 1. 중력 가속도가 누적된다.
+            _yVelocity += _gravity * Time.deltaTime;
+
+            // 2. 플레이어에게 y축에 있어 중력을 적용한다.
+
+            dir.y = _yVelocity;
+
+            // 3-2. 이동하기
+            //transform.position += speed * dir * Time.deltaTime;
+            _characterController.Move(dir * speed * Time.deltaTime);
         }
-
-        // 점프 구현
-        // 1. 만약에 [Spacebar] 버튼을 누르는 순간 && (땅이거나 or 점프 횟수가 남아있다면)
-        if (Input.GetKeyDown(KeyCode.Space) && (_characterController.isGrounded || (_isJumping && JumpRemainCount > 0)))
-        {
-            _isJumping = true;
-
-            JumpRemainCount--;
-
-            // 2. 플레이어에게 y축에 있어 점프 파워를 적용한다.
-            _yVelocity = JumpPower;
-        }
-
-
-        // 3-1. 중력 적용
-        // 1. 중력 가속도가 누적된다.
-        _yVelocity += _gravity * Time.deltaTime;
-
-        // 2. 플레이어에게 y축에 있어 중력을 적용한다.
-
-        dir.y = _yVelocity;
-
-        // 3-2. 이동하기
-        //transform.position += speed * dir * Time.deltaTime;
-        _characterController.Move(dir * speed * Time.deltaTime);
     }
 
     public void Hit(int damage)
@@ -203,6 +203,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
         {
             HealthSliderUI.value = 0f;
             gameObject.SetActive(false);
+
+            GameManager.Instance.GameOver();
         }
     }
 

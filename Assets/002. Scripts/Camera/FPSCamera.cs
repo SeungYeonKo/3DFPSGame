@@ -12,10 +12,12 @@ public class FPSCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.localPosition = Target.position;          //부모 상관없이 내 위치를 바꾸겠다
+        if (GameManager.Instance.state == GameState.Start)
+        {
+            transform.localPosition = Target.position;          //부모 상관없이 내 위치를 바꾸겠다
 
-        Vector2 xy = CameraManager.Instance.XY;
-        transform.eulerAngles = new Vector3(-xy.y, xy.x, 0);
-
+            Vector2 xy = CameraManager.Instance.XY;
+            transform.eulerAngles = new Vector3(-xy.y, xy.x, 0);
+        }
     }
 }
