@@ -289,6 +289,7 @@ public class Monster : MonoBehaviour, IHitable
             _knockbackProgress = 0f;
 
             Debug.Log("상태 전환: Damaged -> Trace");
+            _animator.SetTrigger("DamagedToTrace");
             _currentState = MonsterState.Trace;
         }
     }
@@ -303,25 +304,16 @@ public class Monster : MonoBehaviour, IHitable
         else
         {
             Debug.Log("상태 전환: Any -> Damaged");
+            _animator.SetTrigger("Damaged");
             _currentState = MonsterState.Damaged;
         }
     }
 
     private void Die()
     {
-
         // 죽을때 아이템 생성
         ItemObjectFactory.Instance.MakePercent(transform.position);
 
         Destroy(gameObject);
     }
-
-
-
-
-
-
-
-
-
 }
