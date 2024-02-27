@@ -26,6 +26,7 @@ public class Monster : MonoBehaviour, IHitable
 
     //private CharacterController _characterController;
     private NavMeshAgent _navMeshAgent;
+    private Animator           _animator;
 
 
     private Transform _target;         // 플레이어
@@ -58,6 +59,7 @@ public class Monster : MonoBehaviour, IHitable
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = MoveSpeed;
 
+        _animator = GetComponentInChildren<Animator>();           // 캐싱
 
         _target = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -116,6 +118,7 @@ public class Monster : MonoBehaviour, IHitable
         {
             _idleTimer = 0f;
             Debug.Log("상태 전환: Idle -> Patrol");
+            _animator.SetTrigger("IdleToPatrol");
             _currentState = MonsterState.Patrol;
         }
 
@@ -124,6 +127,7 @@ public class Monster : MonoBehaviour, IHitable
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             Debug.Log("상태 전환: Idle -> Trace");
+            _animator.SetTrigger("IdleToTrace");
             _currentState = MonsterState.Trace;
         }
     }
@@ -152,12 +156,15 @@ public class Monster : MonoBehaviour, IHitable
         if (Vector3.Distance(transform.position, StartPosition) >= MoveDistance)
         {
             Debug.Log("상태 전환: Trace -> Comeback");
+            _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
         {
             Debug.Log("상태 전환: Trace -> Attack");
+            _animator.SetTrigger("TraceToAttack");
+
             _currentState = MonsterState.Attack;
         }
     }
@@ -170,12 +177,14 @@ public class Monster : MonoBehaviour, IHitable
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
         {
             Debug.Log("상태 전환: Patrol -> Comeback");
+            _animator.SetTrigger("PatrolToComeback");
             _currentState = MonsterState.Comeback;
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             Debug.Log("상태 전환: Patrol -> Trace");
+            _animator.SetTrigger("PatrolToTrace");
             _currentState = MonsterState.Trace;
         }
 
@@ -205,12 +214,16 @@ public class Monster : MonoBehaviour, IHitable
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
         {
             Debug.Log("상태 전환: Comeback -> idle");
+            _animator.SetTrigger("ComebackToIdle");
+
             _currentState = MonsterState.Idle;
         }
 
         if (Vector3.Distance(StartPosition, transform.position) <= TOLERANCE)
         {
             Debug.Log("상태 전환: Comeback -> idle");
+            _animator.SetTrigger("ComebackToIdle");
+
             _currentState = MonsterState.Idle;
         }
 
@@ -223,6 +236,8 @@ public class Monster : MonoBehaviour, IHitable
         {
             _attackTimer = 0f;
             Debug.Log("상태 전환: Attack -> Trace");
+            _animator.SetTrigger("AttackToTrace");
+
             _currentState = MonsterState.Trace;
             return;
         }
@@ -231,15 +246,19 @@ public class Monster : MonoBehaviour, IHitable
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= AttackDelay)
         {
-            IHitable playerHitable = _target.GetComponent<IHitable>();
-            if (playerHitable != null)
-            {
-                Debug.Log("때렸다!");
-                playerHitable.Hit(Damage);
-                _attackTimer = 0f;
-            }
+            _animator.SetTrigger("Attack");
         }
+    }
 
+    public void PlayerAttack()
+    {
+        IHitable playerHitable = _target.GetComponent<IHitable>();
+        if (playerHitable != null)
+        {
+            Debug.Log("때렸다!");
+            playerHitable.Hit(Damage);
+            _attackTimer = 0f;
+        }
     }
 
     private void Damaged()
