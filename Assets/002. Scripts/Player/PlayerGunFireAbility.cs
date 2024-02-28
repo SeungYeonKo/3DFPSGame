@@ -45,7 +45,6 @@ public class PlayerGunFireAbility : MonoBehaviour
     public Image GunImageUI;
 
     public List<GameObject> MuzzleEffects;
-  
 
     private void Start()
     {
