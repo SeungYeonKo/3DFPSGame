@@ -22,12 +22,10 @@ public class Monster : MonoBehaviour, IHitable
     public int Health;
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
-    /***********************************************************************/
 
     //private CharacterController _characterController;
     private NavMeshAgent _navMeshAgent;
     private Animator           _animator;
-
 
     private Transform _target;         // 플레이어
     public float FindDistance = 5f;  // 감지 거리

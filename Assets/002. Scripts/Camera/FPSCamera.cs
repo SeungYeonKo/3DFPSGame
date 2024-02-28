@@ -12,6 +12,10 @@ public class FPSCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (GameManager.Instance.state != GameState.Start)
+        {
+            return;
+        }
         if (GameManager.Instance.state == GameState.Start)
         {
             transform.localPosition = Target.position;          //부모 상관없이 내 위치를 바꾸겠다

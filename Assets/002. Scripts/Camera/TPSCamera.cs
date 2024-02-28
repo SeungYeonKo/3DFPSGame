@@ -11,6 +11,10 @@ public class TPSCamera : MonoBehaviour
     public float a;
     private void LateUpdate()
     {
+        if (GameManager.Instance.state != GameState.Start)
+        {
+            return;
+        }
         if (GameManager.Instance.state == GameState.Start)
         {
             transform.localPosition = Target.position + Offset;

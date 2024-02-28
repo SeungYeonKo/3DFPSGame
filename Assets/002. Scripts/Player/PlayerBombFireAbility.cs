@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerBombFireAbility : MonoBehaviour
 {
+    Animator _animator;
     // 목표: 마우스 오른쪽 버튼을 누르면 시선이 바라보는 방향으로 수류탄을 던지고 싶다.
     // 필요 속성:
     // - 수류탄 프리팹
@@ -27,6 +28,8 @@ public class PlayerBombFireAbility : MonoBehaviour
 
     private void Start()
     {
+        _animator = GetComponentInChildren<Animator>();
+
         // 폭탄 창고 생성
         BombPool = new List<GameObject>();
         for (int i = 0; i < BombPoolSize; i++) // 생성할 폭탄 개수 만큼 반복
@@ -35,9 +38,7 @@ public class PlayerBombFireAbility : MonoBehaviour
             bombObject.SetActive(false);                     // 2. 비활성화
             BombPool.Add(bombObject);                        // 3. 창고에 집어 넣는다.
         }
-
         BombRemainCount = BombMaxCount;
-
         RefreshUI();
     }
 
@@ -48,32 +49,38 @@ public class PlayerBombFireAbility : MonoBehaviour
 
     private void Update()
     {
-        /* 수류탄 투척 */
-        // 1. 마우스 오른쪽 버튼을 눌렀을 때 && 수류탄 개수가 0보다 크면
-        if (Input.GetMouseButtonDown(1) && BombRemainCount > 0)
+        if (GameManager.Instance.state == GameState.Start)
         {
-            BombRemainCount--;
-
-            RefreshUI();
-
-            // 2. 창고에서 수류탄을 꺼낸 다음 던지는 위치로 조절
-            GameObject bomb = null;
-            for (int i = 0; i < BombPool.Count; ++i)        // 1. 창고를 뒤진다.
+            // 1. 마우스 오른쪽 버튼을 눌렀을 때 && 수류탄 개수가 0보다 크면
+            if (Input.GetMouseButtonDown(1) && BombRemainCount > 0)
             {
-                if (BombPool[i].activeInHierarchy == false) // 2. 쓸만한 폭탄을 찾는다.
-                {
-                    bomb = BombPool[i];
-                    bomb.SetActive(true);                   // 3. 꺼낸다.
-                    break;
-                }
+                BombRemainCount--;
+
+                RefreshUI();
+                _animator.SetTrigger("Throw");
+                //ThrowEvent();
             }
-
-            bomb.transform.position = FirePosition.position;
-
-            // 3. 시선이 바라보는 방향(카메라가 바라보는 방향 = 카메라의 전방) 으로 수류탄 투척
-            Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();
-            rigidbody.velocity = Vector3.zero;
-            rigidbody.AddForce(Camera.main.transform.forward * ThrowPower, ForceMode.Impulse);
         }
+    }
+    public void ThrowEvent()
+    {
+        // 2. 창고에서 수류탄을 꺼낸 다음 던지는 위치로 조절
+        GameObject bomb = null;
+        for (int i = 0; i < BombPool.Count; ++i)        // 1. 창고를 뒤진다.
+        {
+            if (BombPool[i].activeInHierarchy == false) // 2. 쓸만한 폭탄을 찾는다.
+            {
+                bomb = BombPool[i];
+                bomb.SetActive(true);                   // 3. 꺼낸다.
+                break;
+            }
+        }
+        bomb.transform.position = FirePosition.position;
+
+        // 3. 시선이 바라보는 방향(카메라가 바라보는 방향 = 카메라의 전방) 으로 수류탄 투척
+        Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.AddForce(Camera.main.transform.forward * ThrowPower, ForceMode.Impulse);
+        rigidbody.AddTorque(Camera.main.transform.forward * ThrowPower, ForceMode.Impulse);         // 회전
     }
 }

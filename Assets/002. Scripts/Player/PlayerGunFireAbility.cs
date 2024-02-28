@@ -8,11 +8,13 @@ using UnityEngine.UI;
 
 public class PlayerGunFireAbility : MonoBehaviour
 {
+    Animator _animator;
     public Gun CurrentGun;        // 현재 들고있는 총
     private int _currentGunIndex; // 현재 들고있는 총의 순서
 
     private float _timer;
 
+    // 줌 모드
     // 줌 모드
     private const int DefaultFOV = 60;
     private const int ZoomFOV = 20;
@@ -42,15 +44,22 @@ public class PlayerGunFireAbility : MonoBehaviour
     // 무기 이미지 UI
     public Image GunImageUI;
 
+    public List<GameObject> MuzzleEffects;
   
 
     private void Start()
     {
+        foreach(GameObject muzzleEffect in MuzzleEffects)
+        {
+            muzzleEffect.SetActive(false);
+        }
         _currentGunIndex = 0;
 
         // 총알 개수 초기화
         RefreshUI();
         RefreshGun();
+
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public void RefreshUI()
@@ -194,11 +203,18 @@ public class PlayerGunFireAbility : MonoBehaviour
                 StopAllCoroutines();
                 _isReloading = false;
             }
+            _animator.SetTrigger("Attack");
 
             CurrentGun.BulletRemainCount -= 1;
             RefreshUI();
 
             _timer = 0;
+
+            // 총 이펙트 중 하나를 켜준다
+            // 0.1초 후 
+            // 꺼준다
+            StartCoroutine(MuzzleEffectOn_Coroutine());
+
 
             // 2. 레이(광선)을 생성하고, 위치와 방향을 설정한다.
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -222,6 +238,19 @@ public class PlayerGunFireAbility : MonoBehaviour
                 HitEffect.Play();
             }
         }
+    }
+
+    private IEnumerator MuzzleEffectOn_Coroutine()
+    {
+        // 총 이펙트 중 하나를 켜준다
+        int randomIndex = UnityEngine.Random.Range(0, MuzzleEffects.Count);
+        MuzzleEffects[randomIndex].SetActive(true);
+
+        // 0.1초 후 
+        yield return new WaitForSeconds(0.1f);
+
+        // 꺼준다
+        MuzzleEffects[randomIndex].SetActive(false);
     }
 
     private void RefreshGun()
