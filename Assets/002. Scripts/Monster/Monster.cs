@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.Assertions.Must;
 
 
 public enum MonsterState // 몬스터의 상태
@@ -48,6 +49,7 @@ public class Monster : MonoBehaviour, IHitable
     private float _idleTimer;
     public Transform PatrolTarget;
 
+ 
 
     private MonsterState _currentState = MonsterState.Idle;
 
@@ -254,7 +256,9 @@ public class Monster : MonoBehaviour, IHitable
         if (playerHitable != null)
         {
             Debug.Log("때렸다!");
-            playerHitable.Hit(Damage);
+
+            DamageInfo damageInfo      = new DamageInfo(DamageType.Normal, Damage);
+            playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
         }
     }
@@ -292,9 +296,17 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
 
-    public void Hit(int damage)
+    public void Hit(DamageInfo damage)
     {
-        Health -= damage;
+        // todo. 데미지 타입이 크리티컬이면 피흘리기
+        if(damage.DamageType == DamageType.Critical)
+        {
+            // 실습과제 47. 블러드를 팩토리패턴으로 구현하기( 파일 및 클래스명 : BloodFactory)
+            BloodFactory.instance.Make(damage.Position, damage.Normal);
+        }
+       
+        
+        Health -= damage.Amount;
         if (Health <= 0)
         {
             Die();

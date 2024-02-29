@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameState state { get; private set; } = GameState.Ready;
 
     public TextMeshProUGUI StateTextUI;
+    
 
     public Color ReadyStateColor;
     public Color StartStateColor;
@@ -35,6 +37,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Start_Coroutine());
+    }
+
+    public void OnOptionButtonClicked()
+    {
+      
+            Debug.Log("옵션버튼~!!");
+        
     }
 
     private IEnumerator Start_Coroutine()

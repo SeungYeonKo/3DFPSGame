@@ -163,7 +163,8 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
         {
             if (_yVelocity < -20)
             {
-                Hit(10 * (int)(_yVelocity / -10f));
+                DamageInfo damageInfo = new DamageInfo(DamageType.Normal, 10 * (int)(_yVelocity / -10));
+                Hit(damageInfo);
             }
 
             _isJumping = false;
@@ -201,13 +202,13 @@ public class PlayerMoveAbility : MonoBehaviour, IHitable
 
     }
 
-    public void Hit(int damage)
+    public void Hit(DamageInfo damageInfo)
     {
         StartCoroutine(HitEffect_Coroutine(0.2f));
         CameraManager.Instance.CameraShake.Shake();
         _animator.SetLayerWeight(1,  1 - Health / (float)MaxHealth);
 
-        Health -= damage;
+        Health -= damageInfo.Amount;
         if (Health <= 0)
         {
             HealthSliderUI.value = 0f;
