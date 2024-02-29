@@ -23,7 +23,10 @@ public class GameManager : MonoBehaviour
     public GameState state { get; private set; } = GameState.Ready;
 
     public TextMeshProUGUI StateTextUI;
-    
+
+    public Button Resume;
+    public Button Again;
+    public Button End;
 
     public Color ReadyStateColor;
     public Color StartStateColor;
@@ -41,9 +44,21 @@ public class GameManager : MonoBehaviour
 
     public void OnOptionButtonClicked()
     {
-      
             Debug.Log("옵션버튼~!!");
-        
+    }
+
+    public void OnResumeButtonClicked()
+    {
+        Debug.Log("계속하기~!!");
+    }
+    public void OnAgainButtonClicked()
+    {
+        Debug.Log("다시하기~!!");
+    }
+
+    public void OnEndButtonClicked()
+    {
+        Debug.Log("게임종료~!!");
     }
 
     private IEnumerator Start_Coroutine()
