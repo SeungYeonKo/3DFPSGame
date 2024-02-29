@@ -12,19 +12,22 @@ public class UI_OptionPopup : MonoBehaviour
     public void OnResumeButtonClicked()
     {
        Debug.Log("계속하기~!!");
+        GameManager.Instance.Again();
         Close();
       
     }
     public void OnAgainButtonClicked()
     {
         Debug.Log("다시하기~!!");
+        GameManager.Instance.Again();
         Close ();
     }
 
     public void OnEndButtonClicked()
     {
         Debug.Log("게임종료~!!");
-         Close ();
+       GameManager.Instance.EndGame();
+        Close ();
     }
 
     private void Awake()

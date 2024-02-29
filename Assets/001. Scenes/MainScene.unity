@@ -6592,7 +6592,7 @@ MonoBehaviour:
   ReadyStateColor: {r: 0.3443396, g: 0.37214297, b: 1, a: 1}
   StartStateColor: {r: 0.23697905, g: 0.7830189, b: 0.18098079, a: 1}
   OverStateColor: {r: 0.9622642, g: 0.15886435, b: 0.15886435, a: 1}
-  OptionUI: {fileID: 0}
+  OptionUI: {fileID: 597003781}
 --- !u!1 &1248933038
 GameObject:
   m_ObjectHideFlags: 0
