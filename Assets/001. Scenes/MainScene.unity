@@ -569,8 +569,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1235978579}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 597003781}
+        m_TargetAssemblyTypeName: UI_OptionPopup, Assembly-CSharp
         m_MethodName: OnAgainButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -2541,6 +2541,7 @@ GameObject:
   - component: {fileID: 597003778}
   - component: {fileID: 597003780}
   - component: {fileID: 597003779}
+  - component: {fileID: 597003781}
   m_Layer: 5
   m_Name: UI_Option
   m_TagString: Untagged
@@ -2609,6 +2610,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597003777}
   m_CullTransparentMesh: 1
+--- !u!114 &597003781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597003777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d62e7379698df742b56d8b3dadb3e61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Resume: {fileID: 996642210}
+  Again: {fileID: 58003991}
+  End: {fileID: 891787235}
 --- !u!1 &598088469 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1745016628390402, guid: 699cfd0a280069f4f84062252da9195f, type: 3}
@@ -4553,8 +4569,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1235978579}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 597003781}
+        m_TargetAssemblyTypeName: UI_OptionPopup, Assembly-CSharp
         m_MethodName: OnEndButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -5268,8 +5284,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1235978579}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 597003781}
+        m_TargetAssemblyTypeName: UI_OptionPopup, Assembly-CSharp
         m_MethodName: OnResumeButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -6573,12 +6589,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateTextUI: {fileID: 957947925}
-  Resume: {fileID: 996642210}
-  Again: {fileID: 58003991}
-  End: {fileID: 891787235}
   ReadyStateColor: {r: 0.3443396, g: 0.37214297, b: 1, a: 1}
   StartStateColor: {r: 0.23697905, g: 0.7830189, b: 0.18098079, a: 1}
   OverStateColor: {r: 0.9622642, g: 0.15886435, b: 0.15886435, a: 1}
+  OptionUI: {fileID: 0}
 --- !u!1 &1248933038
 GameObject:
   m_ObjectHideFlags: 0
