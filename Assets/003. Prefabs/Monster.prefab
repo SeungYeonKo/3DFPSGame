@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8825490748670025947}
   - component: {fileID: 6927994518437679372}
   - component: {fileID: 8856143566364346243}
+  - component: {fileID: -8993197691794114652}
   m_Layer: 8
   m_Name: Monster
   m_TagString: Monster
@@ -127,7 +128,6 @@ MonoBehaviour:
   Health: 0
   MaxHealth: 100
   HealthSliderUI: {fileID: 5110356332603049761}
-  _target: {fileID: 0}
   FindDistance: 5
   AttackDistance: 2
   MoveSpeed: 2.5
@@ -135,6 +135,7 @@ MonoBehaviour:
   MoveDistance: 40
   Damage: 10
   KnockbackPower: 0.5
+  PatrolTarget: {fileID: 0}
 --- !u!195 &8856143566364346243
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -157,6 +158,30 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!205 &-8993197691794114652
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43906737078761604}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1 &2490938588999962130
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +408,7 @@ Transform:
   m_GameObject: {fileID: 5857152528636131635}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.088, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
