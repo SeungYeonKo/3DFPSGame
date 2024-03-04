@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameState state { get; private set; } = GameState.Ready;
 
     public TextMeshProUGUI StateTextUI;
+    public GameObject GameOverUI;
 
     public Color ReadyStateColor;
     public Color StartStateColor;
@@ -35,11 +36,12 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
-   
+ 
     private void Start()
     {
         Time.timeScale = 1f;
         StartCoroutine(Start_Coroutine());
+        GameOverUI.gameObject.SetActive(false);
     }
 
     public void Pause()
@@ -59,7 +61,6 @@ public class GameManager : MonoBehaviour
         Application.Quit(); 
     }
 
-
     public void OnOptionButtonClicked()
     {
          Debug.Log("옵션버튼~!!");
@@ -68,8 +69,6 @@ public class GameManager : MonoBehaviour
 
         OptionUI.Open();
     }
-
-  
 
     private IEnumerator Start_Coroutine()
     {
@@ -93,9 +92,11 @@ public class GameManager : MonoBehaviour
     // 5. 플레이어 체력이 0 이 되면 "게임 오버" 상태
     public void GameOver()
     {
-            state = GameState.Over;
-            StateTextUI.gameObject.SetActive(true);
-            Refresh();
+        state = GameState.Over;
+        StateTextUI.gameObject.SetActive(true);
+        GameOverUI.gameObject.SetActive(true);
+
+        Refresh();
     }
 
     public void Refresh()
@@ -119,6 +120,8 @@ public class GameManager : MonoBehaviour
             {
                 StateTextUI.text = "Over . . .";
                 StateTextUI.color = OverStateColor;
+                GameOverUI.gameObject.SetActive(true);
+
 
                 break;
             }
