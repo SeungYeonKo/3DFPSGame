@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LobbyScene : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class LobbyScene : MonoBehaviour
     {
         string id = IDInputField.text;
         string pw = PWInputField.text;
-        if(id == string.Empty || pw == string.Empty)
+        if (id == string.Empty || pw == string.Empty)
         {
             NotifyTextUI.text = "아이디와 비밀번호를 정확하게 입력해주세요.";
             return;
@@ -40,16 +41,41 @@ public class LobbyScene : MonoBehaviour
             NotifyTextUI.text = "회원가입을 완료했습니다 !";
             PlayerPrefs.SetString(id, pw);
         }
-        IDInputField.text   = string.Empty;
+        IDInputField.text = string.Empty;
         PWInputField.text = string.Empty;
     }
 
     // 로그인 버튼 클릭
     public void OnClickLoginButton()
     {
+        string id = IDInputField.text;
+        string pw = PWInputField.text;
+
         // 0. 아이디 또는 비밀번호 입력 x  -> "아이디와 비밀번호를 정확하게 입력해주세요."
-        // 1. 없는 아이디                            -> "아이디를 확인해주세요."
-        // 2. 틀린 비밀번호                        -> "비밀번호를 확인해주세요."
-        // 3. 로그인 성공                           -> 메인 씬으로 이동
+        if (IDInputField.text == string.Empty || PWInputField.text == string.Empty)
+        {
+            NotifyTextUI.text = "아이디와 비밀번호를 정확하게 입력해주세요.";
+        }
+        else
+        {
+            // 1. 아이디가 존재하지 않는 경우
+            if (!PlayerPrefs.HasKey(id))
+            {
+                NotifyTextUI.text = "아이디를 확인해주세요.";
+            }
+            else
+            {
+                // 2. 아이디는 존재하나, 비밀번호가 일치하지 않는 경우
+                if (PlayerPrefs.GetString(id) != pw)
+                {
+                    NotifyTextUI.text = "비밀번호를 확인해주세요.";
+                }
+                else
+                {
+                    // 3. 로그인 성공 -> 메인 씬으로 이동
+                    SceneManager.LoadScene("MainScene");
+                }
+            }
+        }
     }
 }
