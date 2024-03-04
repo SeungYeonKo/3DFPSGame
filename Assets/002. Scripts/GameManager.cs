@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
 
     public void OnOptionButtonClicked()
     {
+        if(state ==  GameState.Over)
+        {
+            return;
+        }
          Debug.Log("옵션버튼~!!");
 
         Pause();
