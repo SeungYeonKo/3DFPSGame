@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_OptionPopup : MonoBehaviour
@@ -18,7 +19,10 @@ public class UI_OptionPopup : MonoBehaviour
     public void OnAgainButtonClicked()
     {
         Debug.Log("다시하기~!!");
-        GameManager.Instance.Again();
+        // 메인씬을 끄고 다시 불러오는 방법
+        //SceneManager.LoadScene("MainScene");    // = SceneManager.LoadScene("0"); 
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
         Close ();
     }
 
