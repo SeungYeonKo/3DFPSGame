@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
+
 public class LobbyScene : MonoBehaviour
 {
     // 사용자 계정을 새로 저장하거나(회원가입), 저장된 데이터를 읽어(로그인)
@@ -68,12 +70,12 @@ public class LobbyScene : MonoBehaviour
                 // 2. 아이디는 존재하나, 비밀번호가 일치하지 않는 경우
                 if (PlayerPrefs.GetString(id) != pw)
                 {
-                    NotifyTextUI.text = "비밀번호를 확인해주세요.";
+                    NotifyTextUI.text = "아이디와 비밀번호를 확인해주세요.";
                 }
                 else
                 {
                     // 3. 로그인 성공 -> 메인 씬으로 이동
-                    SceneManager.LoadScene("MainScene");
+                    SceneManager.LoadScene("LoadingScene");
                 }
             }
         }
